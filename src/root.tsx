@@ -1,4 +1,5 @@
 // @refresh reload
+import { QueryClientProvider } from "@tanstack/solid-query";
 import { Suspense } from "solid-js";
 import {
   A,
@@ -14,6 +15,8 @@ import {
 } from "solid-start";
 import "./root.css";
 
+import { queryClient } from "~/api";
+
 export default function Root() {
   return (
     <Html lang="en" data-theme="cupcake">
@@ -24,11 +27,13 @@ export default function Root() {
       </Head>
       <Body>
         <Suspense>
-          <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
+          <QueryClientProvider client={queryClient}>
+            <ErrorBoundary>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </ErrorBoundary>
+          </QueryClientProvider>
         </Suspense>
         <Scripts />
       </Body>
