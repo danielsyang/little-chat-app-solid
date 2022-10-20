@@ -1,5 +1,34 @@
-export default function MessageInput() {
+import { CreateMutateAsyncFunction } from "@tanstack/solid-query";
+import { createSignal } from "solid-js";
+import { CreateMessage } from "~/api/messages";
+
+interface MessageInputProps {
+  sendMessage: CreateMutateAsyncFunction<any, any, CreateMessage>;
+}
+
+export default function MessageInput({ sendMessage }: MessageInputProps) {
+  const [message, setMessage] = createSignal<string>("");
+
+  const onClickSendButton = async () => {
+    await sendMessage({
+      content: message(),
+      userId: "ce6f3daa-e69f-46bf-96c4-d1111af78ff8",
+    });
+  };
+
   return (
-    <textarea class="textarea-bordered textarea mx-2 mt-auto mb-4 focus:border-0" />
+    <div class="mx-2 mt-auto mb-4 flex w-[calc(100%-16px)]">
+      <textarea
+        class="textarea-bordered textarea w-full focus:border-0"
+        value={message()}
+        onInput={(e) => setMessage(e.currentTarget.value)}
+      />
+      <button
+        onClick={onClickSendButton}
+        class="btn-primary btn m-auto ml-4 text-white"
+      >
+        Send
+      </button>
+    </div>
   );
 }

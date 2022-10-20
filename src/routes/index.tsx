@@ -1,13 +1,14 @@
-import { createQuery } from "@tanstack/solid-query";
+import { createMutation, createQuery } from "@tanstack/solid-query";
 import { For, Match, Switch } from "solid-js";
 
-import { getMessages, Messages } from "~/api/messages";
+import { createMessage, getMessages, Messages } from "~/api/messages";
 import MessageDisplay from "~/components/Message";
 import MessageInput from "~/components/MessageInput";
 import Spinner from "~/components/Spinner";
 
 export default function Home() {
   const query = createQuery<Messages[]>(() => ["messages"], getMessages);
+  const mutation = createMutation(createMessage);
 
   return (
     <main class="flex h-full">
@@ -25,7 +26,7 @@ export default function Home() {
           </Switch>
         </div>
 
-        <MessageInput />
+        <MessageInput sendMessage={mutation.mutateAsync} />
       </div>
     </main>
   );
