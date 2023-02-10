@@ -7,11 +7,11 @@ interface MessageInputProps {
 }
 
 export default function MessageInput({ sendMessage }: MessageInputProps) {
-  const [message, setMessage] = createSignal<string>("");
+  const [getMessage, setMessage] = createSignal<string>("");
 
   const onClickSendButton = async () => {
     await sendMessage({
-      content: message(),
+      content: getMessage(),
       userId: "ce6f3daa-e69f-46bf-96c4-d1111af78ff8",
     });
   };
@@ -20,7 +20,7 @@ export default function MessageInput({ sendMessage }: MessageInputProps) {
     <div class="mx-2 mt-auto mb-4 flex w-[calc(100%-16px)]">
       <textarea
         class="textarea-bordered textarea w-full focus:border-0"
-        value={message()}
+        value={getMessage()}
         onInput={(e) => setMessage(e.currentTarget.value)}
       />
       <button

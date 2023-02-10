@@ -4,5 +4,5 @@
 
 html,
 body {
-  height: 100%;
+  @apply flex h-full w-full;
 }
